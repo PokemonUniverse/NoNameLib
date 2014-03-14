@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D1DF9A5B-965B-406A-8499-7DC9D2B79CEA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NoNameLib.TileEditor</RootNamespace>
+    <AssemblyName>NoNameLib.TileEditor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\NoNameLib.Files\References\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\TilePointTileLayer.cs" />
+    <Compile Include="Graphics\TextureFont2D.cs" />
+    <Compile Include="Graphics\TextureManager.cs" />
+    <Compile Include="Graphics\TexUtil2D.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Rendering\Renderer2DGridTopDown.cs" />
+    <Compile Include="TileEngine.cs" />
+    <Compile Include="Collections\TilePoint.cs" />
+    <Compile Include="Collections\TilePointLayer.cs" />
+    <Compile Include="Collections\TilePointTable.cs" />
+    <Compile Include="Enums\MovementTypes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NoNameLib\NoNameLib.csproj">
+      <Project>{332d4c51-cca6-41f6-80c6-28a17677b9f7}</Project>
+      <Name>NoNameLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tile0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_base.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sys_m_11.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
