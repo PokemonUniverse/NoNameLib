@@ -42,16 +42,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Forms\NumericUpDownExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageView\TilesetView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageView\TilesetView.Designer.cs">
+      <DependentUpon>TilesetView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ListView\ImageListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NoNameLib\NoNameLib.csproj">
       <Project>{332d4c51-cca6-41f6-80c6-28a17677b9f7}</Project>
       <Name>NoNameLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\ImageView\TilesetView.resx">
+      <DependentUpon>TilesetView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

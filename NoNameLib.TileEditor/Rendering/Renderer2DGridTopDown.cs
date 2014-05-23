@@ -2,11 +2,16 @@
 using NoNameLib.TileEditor.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+
 namespace NoNameLib.TileEditor.Rendering
 {
     internal class Renderer2DGridTopDown : IRenderer
     {
-        private readonly TileEngine tileEngine;     
+        #region Fields
+
+        private readonly TileEngine tileEngine;
+
+        #endregion
 
         internal Renderer2DGridTopDown(TileEngine parentTileEngine)
         {
@@ -15,6 +20,8 @@ namespace NoNameLib.TileEditor.Rendering
 
         public void Initialize()
         {
+            //InitializeShaders();
+
             TexUtil2D.InitTexturing();
         }
 
@@ -42,14 +49,53 @@ namespace NoNameLib.TileEditor.Rendering
             GL.PushMatrix(); // It is important to push the Matrix before calling glRotatef and glTranslatef
             GL.Translate(0, 0, 0); // Translates the screen
 
-            RenderAll(ref tilePointTable);
+            RenderBackground();
+            if (tilePointTable.Count > 0)
+            {
+                RenderAll(ref tilePointTable);
+            }
 
             GL.PopMatrix(); // Don't forget to pop the Matrix
             GL.Finish();
         }
 
+        private void RenderBackground()
+        {
+            int mapTileSize = tileEngine.TileSize;
+
+            //TilesV and H +1 for black border when show_grid = false
+            int tilesH = tileEngine.MapWidth / mapTileSize + 1;
+            int tilesV = tileEngine.MapHeight / mapTileSize + 1;
+
+            TextureManager.Instance.BindTexture("sys_base");
+
+            for (int x = 0; x < tilesH; x++)
+            {
+                for (int y = 0; y < tilesV; y++)
+                {
+                    // Calculate rendering top and left coordiates for this tile
+                    float left;
+                    float top;
+                    if (tileEngine.ShowGrid)
+                    {
+                        left = (x * mapTileSize) + ((x > 0) ? (x * 1) : 0);
+                        top = (y * mapTileSize) + ((y > 0) ? (y * 1) : 0);
+                    }
+                    else
+                    {
+                        left = (x * mapTileSize);
+                        top = (y * mapTileSize);
+                    }
+
+                    RenderTile(left, top);
+                }
+            }
+        }
+
         private void RenderAll(ref TilePointTable mapData)
         {
+            TextureManager.Instance.BindTexture("Pokemon Universe Tileset 2");
+
             int mapTileSize = tileEngine.TileSize;
 
             //TilesV and H +1 for black border when show_grid = false
@@ -99,13 +145,15 @@ namespace NoNameLib.TileEditor.Rendering
                                     if (tileLayer.TileId.Equals("") || tileLayer.TileId.Equals("0"))
                                         continue;
 
-                                    TextureManager.Instance.BindTexture(tileLayer.TileId);
-                                    RenderTile(left, top);
+                                    RenderSprite(tileLayer.Image, (int)left, (int)top);
+
+                                    //TextureManager.Instance.BindTexture(tileLayer.TileId);
+                                    //RenderTile(left, top);
 
                                     hasRenderedAnything = true;
                                 }
 
-                                if (tileEngine.ShowBlocking)
+                                /*if (tileEngine.ShowBlocking)
                                 {
                                     TextureManager.Instance.BindTexture("sys_m_" + layer.Movement);
                                     RenderTile(left, top);
@@ -114,7 +162,7 @@ namespace NoNameLib.TileEditor.Rendering
                                 {
                                     TextureManager.Instance.BindTexture("sys_event");
                                     RenderTile(left, top);
-                                }
+                                }*/
                             }
 
                             // Something has been rendered, break the TilePointLayer loop
@@ -123,18 +171,12 @@ namespace NoNameLib.TileEditor.Rendering
                         }
                     }
 
-                    if (!hasRenderedAnything)
-                    {
-                        TextureManager.Instance.BindTexture("sys_base");
-                        RenderTile(left, top);
-                    }
-
                     // Render selection
-                    if (tileEngine.SelectedTiles.ContainsKey(TilePointTable.GenerateKey(x, y)))
+                    /*if (tileEngine.SelectedTiles.ContainsKey(TilePointTable.GenerateKey(x, y)))
                     {
                         TextureManager.Instance.BindTexture("sys_select");
                         RenderTile(left, top);
-                    }
+                    }*/
                 }
             }
         }
@@ -151,5 +193,38 @@ namespace NoNameLib.TileEditor.Rendering
             GL.TexCoord2(0, 1); GL.Vertex2(left, height);
             GL.End();
         }
+
+        private void RenderSprite(SpriteImage image, int x, int y)
+        {
+            float width = x + tileEngine.TileSize;
+            float height = y + tileEngine.TileSize;
+
+            GL.Begin(BeginMode.Quads);
+            GL.TexCoord2(image.TextureCoords.X / (double)image.TextureWidth, image.TextureCoords.Y / (double)image.TextureHeight); 
+            GL.Vertex2(x, y);
+            GL.TexCoord2((image.TextureCoords.X + tileEngine.TileSize) / (double)image.TextureWidth, image.TextureCoords.Y / (double)image.TextureHeight); 
+            GL.Vertex2(width, y);
+            GL.TexCoord2((image.TextureCoords.X + tileEngine.TileSize) / (double)image.TextureWidth, (image.TextureCoords.Y + tileEngine.TileSize) / (double)image.TextureHeight);
+            GL.Vertex2(width, height);
+            GL.TexCoord2(image.TextureCoords.X / (double)image.TextureWidth, (image.TextureCoords.Y + tileEngine.TileSize) / (double)image.TextureHeight); 
+            GL.Vertex2(x, height);
+            GL.End();
+        }
+
+        /*void RenderSprite(GLuint spritesheet, unsigned spritex, unsigned spritey, unsigned texturew, unsigned textureh, int x, int y, int w, int h)
+        {
+            glColor4ub(255, 255, 255, 255);
+            glBindTexture(GL_TEXTURE_2D, spritesheet);
+            glBegin(GL_QUADS);
+            glTexCoord2d(spritex / (double)texturew, spritey / (double)textureh);
+            glVertex2f(x, y);
+            glTexCoord2d((spritex + w) / (double)texturew, spritey / (double)textureh);
+            glVertex2f(x + w, y);
+            glTexCoord2d((spritex + w) / (double)texturew, (spritey + h) / (double)textureh);
+            glVertex2f(x + w, y + h);
+            glTexCoord2d(spritex / (double)texturew, (spritey + h) / (double)textureh);
+            glVertex2f(x, y + h);
+            glEnd();
+        }*/
     }
 }

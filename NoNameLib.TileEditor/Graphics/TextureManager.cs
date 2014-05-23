@@ -46,7 +46,7 @@ namespace NoNameLib.TileEditor.Graphics
         /// </summary>
         /// <param name="textureFilePath"></param>
         /// <exception cref="NoNameLibException">A NoNameLibException will be thrown when the same texture has already been added or when the texture can not be found.</exception>
-        public void AddTexture(string textureFilePath)
+        public string AddTexture(string textureFilePath)
         {
             var isSystemTexture = textureFilePath.StartsWith("sys_");
 
@@ -68,7 +68,7 @@ namespace NoNameLib.TileEditor.Graphics
                 }
 
                 var filename = Path.GetFileName(textureFilePath);
-                var path = Path.GetFullPath(textureFilePath);
+                var path = Path.GetDirectoryName(textureFilePath);
                 var key = Path.GetFileNameWithoutExtension(textureFilePath);
                 
                 if (filename == null)
@@ -85,6 +85,8 @@ namespace NoNameLib.TileEditor.Graphics
             }
 
             textureMap.Add(texture.Key, texture);
+
+            return texture.Key;
         }
 
         /// <summary>

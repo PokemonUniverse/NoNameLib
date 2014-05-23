@@ -136,6 +136,11 @@ namespace NoNameLib.Extension
                 throw new InvalidOperationException("T must be an enumerated type.");
             }
 
+            if (!Enum.IsDefined(enumType, value))
+            {
+                throw new InvalidOperationException("value is not defined in Enum.");
+            }
+
             // Warning, can throw ArgumentExceptions
             return (T)Enum.Parse(enumType, value.ToString(CultureInfo.InvariantCulture));
         }

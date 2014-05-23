@@ -132,9 +132,9 @@ namespace NoNameLib.TileEditor
         /// Add a new texture to <see cref="TextureManager"/>
         /// </summary>
         /// <param name="textureFilePath">Absolute path to file on disk</param>
-        public void AddTexture(string textureFilePath)
+        public string AddTexture(string textureFilePath)
         {
-            TextureManager.Instance.AddTexture(textureFilePath);
+            return TextureManager.Instance.AddTexture(textureFilePath);
         }
 
         /// <summary>

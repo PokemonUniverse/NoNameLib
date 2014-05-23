@@ -45,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\TilePointTileLayer.cs" />
+    <Compile Include="Graphics\Rect.cs" />
+    <Compile Include="Shaders\Shader.cs" />
+    <Compile Include="Graphics\SpriteImage.cs" />
     <Compile Include="Graphics\TextureFont2D.cs" />
     <Compile Include="Graphics\TextureManager.cs" />
     <Compile Include="Graphics\TexUtil2D.cs" />
@@ -55,6 +58,7 @@
     </Compile>
     <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Rendering\Renderer2DGridTopDown.cs" />
+    <Compile Include="Shaders\Shaders.cs" />
     <Compile Include="TileEngine.cs" />
     <Compile Include="Collections\TilePoint.cs" />
     <Compile Include="Collections\TilePointLayer.cs" />
